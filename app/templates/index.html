@@ -12,9 +12,11 @@
         {% for product in products %}
             <li>
                 <strong>Nome:</strong> {{ product.name }} <br>
+                <strong>Descrição:</strong> {{ product.description }} <br>
                 <strong>Preço:</strong> R$ {{ product.price }} <br>
                 <strong>ID:</strong> {{ product.id }}
             </li>
+        <hr>
         {% endfor %}
     </ul>
 </body>
