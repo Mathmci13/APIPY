@@ -6,10 +6,16 @@
     <title>FastAPI Example</title>
 </head>
 <body>
-    <h1>Welcome to the FastAPI Example</h1>
-    <p>Here is a list of products:</p>
+    <h1>Esse é apenas um exemplo de template do JINJA2 no FASTAPI</h1>
+    <p>Aqui está a lista de produtos na rota do Jinja:</p>
     <ul>
-        <!-- Render products here if passed from route -->
+        {% for product in products %}
+            <li>
+                <strong>Nome:</strong> {{ product.name }} <br>
+                <strong>Preço:</strong> R$ {{ product.price }} <br>
+                <strong>ID:</strong> {{ product.id }}
+            </li>
+        {% endfor %}
     </ul>
 </body>
 </html>
