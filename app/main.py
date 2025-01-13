@@ -1,3 +1,4 @@
+import httpx
 from fastapi import FastAPI
 from app.routes import router as api_router
 from app.database import engine
@@ -39,5 +40,16 @@ app.include_router(api_router)
 
 # Rota de homepage
 @app.get("/", response_class=HTMLResponse)
-def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def home(request: Request):
+    try:
+        # Consumindo a API existente para obter a lista de produtos
+        async with httpx.AsyncClient() as client:
+            response = await client.get("http://127.0.0.1:8000/products/")
+            products = response.json()  # Obtemos os produtos em formato JSON
+    except Exception as e:
+        products = []  # Em caso de erro, enviamos uma lista vazia
+        print(f"Erro ao obter os produtos: {e}")
+
+    # Renderizando o template com os produtos
+    context = {"request": request, "products": products}
+    return templates.TemplateResponse("index.html", context)
